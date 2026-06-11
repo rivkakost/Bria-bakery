@@ -3,13 +3,73 @@
 <head>
   <title>Bria Bakery</title>
 </head>
-<body style="font-family: Arial; padding: 40px; text-align: center;">
+
+<body style="font-family: Arial; max-width:700px; margin:auto; padding:30px;">
 
   <h1>🍪 Bria Bakery</h1>
-
   <p>Whole spelt • no refined sugar • dairy free • avocado oil baked goods</p>
 
-  <h2>We are getting ready to take orders soon!</h2>
+  <h2>Menu</h2>
+
+  <label>Dark Chocolate Sea Salt Cookies ($24)</label><br>
+  <input id="c1" type="number" min="0" value="0"><br><br>
+
+  <label>Maple Snickerdoodle Cookies ($24)</label><br>
+  <input id="c2" type="number" min="0" value="0"><br><br>
+
+  <label>Peanut Butter Cookies ($24)</label><br>
+  <input id="c3" type="number" min="0" value="0"><br><br>
+
+  <label>Banana Bread ($23)</label><br>
+  <input id="b1" type="number" min="0" value="0"><br><br>
+
+  <label>Coffee Crumble Loaf ($23)</label><br>
+  <input id="b2" type="number" min="0" value="0"><br><br>
+
+  <label>Double Chocolate Loaf ($23)</label><br>
+  <input id="b3" type="number" min="0" value="0"><br><br>
+
+  <label>Chocolate Babka ($27)</label><br>
+  <input id="bb1" type="number" min="0" value="0"><br><br>
+
+  <label>Cinnamon Babka ($27)</label><br>
+  <input id="bb2" type="number" min="0" value="0"><br><br>
+
+  <h3>Delivery Option</h3>
+  <select id="delivery">
+    <option value="pickup">Pickup (Friday 2–4 PM)</option>
+    <option value="delivery">Delivery (+$7)</option>
+  </select>
+
+  <br><br>
+
+  <button onclick="checkout()" style="padding:12px; background:black; color:white;">
+    Checkout
+  </button>
+
+  <script>
+    async function checkout() {
+      const order = {
+        cookies1: +c1.value,
+        cookies2: +c2.value,
+        cookies3: +c3.value,
+        banana: +b1.value,
+        coffee: +b2.value,
+        doublechoc: +b3.value,
+        babka1: +bb1.value,
+        babka2: +bb2.value,
+        delivery: delivery.value
+      };
+
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        body: JSON.stringify(order)
+      });
+
+      const data = await res.json();
+      window.location.href = data.url;
+    }
+  </script>
 
 </body>
 </html>
